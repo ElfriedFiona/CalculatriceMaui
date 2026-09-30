@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Base commune à toutes les touches -->
+    <Style x:Key="KeyBase" TargetType="Button">
+        <Setter Property="CornerRadius" Value="20" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="MinimumHeightRequest" Value="0" />
+        <Setter Property="MinimumWidthRequest" Value="0" />
+        <Setter Property="HorizontalOptions" Value="Fill" />
+        <Setter Property="VerticalOptions" Value="Fill" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}" />
+    </Style>
+
+    <Style x:Key="DigitKey" TargetType="Button" BasedOn="{StaticResource KeyBase}">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource DigitKeyLight}, Dark={StaticResource DigitKeyDark}}" />
+    </Style>
+
+    <Style x:Key="FunctionKey" TargetType="Button" BasedOn="{StaticResource KeyBase}">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource FunctionKeyLight}, Dark={StaticResource FunctionKeyDark}}" />
+    </Style>
+
+    <Style x:Key="AdvancedKey" TargetType="Button" BasedOn="{StaticResource KeyBase}">
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource AdvancedKeyLight}, Dark={StaticResource AdvancedKeyDark}}" />
+        <Setter Property="FontSize" Value="22" />
+    </Style>
+
+    <Style x:Key="OperatorKey" TargetType="Button" BasedOn="{StaticResource KeyBase}">
+        <Setter Property="BackgroundColor" Value="{StaticResource AccentKey}" />
+        <Setter Property="TextColor" Value="White" />
+    </Style>
+
+    <Style x:Key="EqualsKeyStyle" TargetType="Button" BasedOn="{StaticResource KeyBase}">
+        <Setter Property="BackgroundColor" Value="{StaticResource EqualsKey}" />
+        <Setter Property="TextColor" Value="White" />
+    </Style>
+
+    <!-- Panneau d'affichage -->
+    <Style x:Key="DisplayPanel" TargetType="Border">
+        <Setter Property="Padding" Value="14,10" />
+        <Setter Property="Margin" Value="4" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 24" />
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource PanelLight}, Dark={StaticResource PanelDark}}" />
+    </Style>
+</ResourceDictionary>

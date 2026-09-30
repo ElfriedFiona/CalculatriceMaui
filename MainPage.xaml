@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CalculatriceMaui.MainPage"
+             Title="Calculatrice"
+             BackgroundColor="{AppThemeBinding Light={StaticResource PageLight}, Dark={StaticResource PageDark}}">
+
+    <!-- LAYOUT 1 : Grid racine. Portrait : affichage au-dessus, clavier en dessous (2* / 5*).
+         Paysage : affichage à gauche, clavier à droite (voir MainPage.xaml.cs). -->
+    <Grid x:Name="RootGrid" Padding="10" RowDefinitions="2*,5*">
+
+        <!-- LAYOUT 2 : Border. Panneau arrondi qui encadre et découpe la zone d'affichage. -->
+        <Border x:Name="DisplayBorder" Grid.Row="0" Style="{StaticResource DisplayPanel}">
+
+            <!-- LAYOUT 3 : VerticalStackLayout. Empile barre d'état, opération et résultat,
+                 ancrés en bas du panneau comme sur une calculatrice physique. -->
+            <VerticalStackLayout VerticalOptions="End" Spacing="2">
+
+                <!-- LAYOUT 4 : HorizontalStackLayout. Aligne le titre et le badge d'erreur sur une ligne. -->
+                <HorizontalStackLayout Spacing="8">
+                    <Label Text="Calculatrice"
+                           FontSize="13"
+                           VerticalOptions="Center"
+                           TextColor="{AppThemeBinding Light={StaticResource MutedLight}, Dark={StaticResource MutedDark}}" />
+                    <Border x:Name="ErrorBadge"
+                            IsVisible="False"
+                            Padding="8,2"
+                            StrokeThickness="0"
+                            BackgroundColor="{StaticResource ErrorRed}"
+                            StrokeShape="RoundRectangle 10">
+                        <Label Text="ERREUR" FontSize="11" FontAttributes="Bold" TextColor="White" />
+                    </Border>
+                </HorizontalStackLayout>
+
+                <!-- LAYOUT 5 : ScrollView horizontal. Une opération très longue défile au lieu de déborder. -->
+                <ScrollView x:Name="ExpressionScroll"
+                            Orientation="Horizontal"
+                            HorizontalScrollBarVisibility="Never">
+                    <Label x:Name="ExpressionLabel"
+                           FontSize="18"
+                           LineBreakMode="NoWrap"
+                           HorizontalTextAlignment="End"
+                           TextColor="{AppThemeBinding Light={StaticResource MutedLight}, Dark={StaticResource MutedDark}}"
+                           SemanticProperties.Description="Opération en cours" />
+                </ScrollView>
+
+                <ScrollView x:Name="ResultScroll"
+                            Orientation="Horizontal"
+                            HorizontalScrollBarVisibility="Never">
+                    <Label x:Name="ResultLabel"
+                           Text="0"
+                           FontSize="52"
+                           FontAttributes="Bold"
+                           LineBreakMode="NoWrap"
+                           HorizontalTextAlignment="End"
+                           TextColor="{AppThemeBinding Light={StaticResource TextLight}, Dark={StaticResource TextDark}}"
+                           SemanticProperties.Description="Résultat" />
+                </ScrollView>
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Clavier : Grid 6 lignes x 4 colonnes, cellules de taille égale (*), donc toujours proportionnelles à l'écran. -->
+        <Grid x:Name="KeypadGrid"
+              Grid.Row="1"
+              RowDefinitions="*,*,*,*,*,*"
+              ColumnDefinitions="*,*,*,*">
+
+            <!-- Ligne 0 : fonctions avancées (bonus) + effacement du dernier caractère -->
+            <Button Grid.Row="0" Grid.Column="0" Text="√" Style="{StaticResource AdvancedKey}" Clicked="OnSquareRootClicked" SemanticProperties.Description="Racine carrée" />
+            <Button Grid.Row="0" Grid.Column="1" Text="x²" Style="{StaticResource AdvancedKey}" Clicked="OnSquareClicked" SemanticProperties.Description="Carré" />
+            <Button Grid.Row="0" Grid.Column="2" Text="1/x" Style="{StaticResource AdvancedKey}" Clicked="OnReciprocalClicked" SemanticProperties.Description="Inverse" />
+            <Button Grid.Row="0" Grid.Column="3" Text="⌫" Style="{StaticResource FunctionKey}" Clicked="OnBackspaceClicked" SemanticProperties.Description="Effacer le dernier caractère" />
+
+            <!-- Ligne 1 -->
+            <Button Grid.Row="1" Grid.Column="0" Text="C" Style="{StaticResource FunctionKey}" Clicked="OnClearClicked" SemanticProperties.Description="Tout effacer" />
+            <Button Grid.Row="1" Grid.Column="1" Text="±" Style="{StaticResource FunctionKey}" Clicked="OnToggleSignClicked" SemanticProperties.Description="Changer le signe" />
+            <Button Grid.Row="1" Grid.Column="2" Text="%" Style="{StaticResource FunctionKey}" Clicked="OnPercentClicked" SemanticProperties.Description="Pourcentage" />
+            <Button Grid.Row="1" Grid.Column="3" Text="÷" Style="{StaticResource OperatorKey}" Clicked="OnOperatorClicked" SemanticProperties.Description="Diviser" />
+
+            <!-- Ligne 2 -->
+            <Button Grid.Row="2" Grid.Column="0" Text="7" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="2" Grid.Column="1" Text="8" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="2" Grid.Column="2" Text="9" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="2" Grid.Column="3" Text="×" Style="{StaticResource OperatorKey}" Clicked="OnOperatorClicked" SemanticProperties.Description="Multiplier" />
+
+            <!-- Ligne 3 -->
+            <Button Grid.Row="3" Grid.Column="0" Text="4" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="3" Grid.Column="1" Text="5" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="3" Grid.Column="2" Text="6" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="3" Grid.Column="3" Text="−" Style="{StaticResource OperatorKey}" Clicked="OnOperatorClicked" SemanticProperties.Description="Soustraire" />
+
+            <!-- Ligne 4 -->
+            <Button Grid.Row="4" Grid.Column="0" Text="1" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="4" Grid.Column="1" Text="2" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="4" Grid.Column="2" Text="3" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="4" Grid.Column="3" Text="+" Style="{StaticResource OperatorKey}" Clicked="OnOperatorClicked" SemanticProperties.Description="Additionner" />
+
+            <!-- Ligne 5 : le zéro occupe deux colonnes -->
+            <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Text="0" Style="{StaticResource DigitKey}" Clicked="OnDigitClicked" />
+            <Button Grid.Row="5" Grid.Column="2" Text="," Style="{StaticResource DigitKey}" Clicked="OnDecimalClicked" SemanticProperties.Description="Virgule" />
+            <Button Grid.Row="5" Grid.Column="3" Text="=" Style="{StaticResource EqualsKeyStyle}" Clicked="OnEqualsClicked" SemanticProperties.Description="Égal" />
+        </Grid>
+    </Grid>
+</ContentPage>

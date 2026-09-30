@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Fonds -->
+    <Color x:Key="PageLight">#F2F3F7</Color>
+    <Color x:Key="PageDark">#17181C</Color>
+    <Color x:Key="PanelLight">#FFFFFF</Color>
+    <Color x:Key="PanelDark">#202226</Color>
+
+    <!-- Textes -->
+    <Color x:Key="TextLight">#1B1C20</Color>
+    <Color x:Key="TextDark">#F5F5F7</Color>
+    <Color x:Key="MutedLight">#6B6F7A</Color>
+    <Color x:Key="MutedDark">#9A9EA8</Color>
+
+    <!-- Touches -->
+    <Color x:Key="DigitKeyLight">#FFFFFF</Color>
+    <Color x:Key="DigitKeyDark">#2B2D33</Color>
+    <Color x:Key="FunctionKeyLight">#D9DCE3</Color>
+    <Color x:Key="FunctionKeyDark">#4A4D57</Color>
+    <Color x:Key="AdvancedKeyLight">#E3E6F8</Color>
+    <Color x:Key="AdvancedKeyDark">#333750</Color>
+    <Color x:Key="AccentKey">#FF9F0A</Color>
+    <Color x:Key="EqualsKey">#30B457</Color>
+    <Color x:Key="ErrorRed">#E5484D</Color>
+</ResourceDictionary>
